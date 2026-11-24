@@ -1,13 +1,14 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-type LegalSlug = "terms" | "privacy" | "cookies" | "license";
+type LegalSlug = "terms" | "privacy" | "cookies" | "license" | "delete-account";
 
 const LEGAL_TABS: { slug: LegalSlug; label: string; href: string }[] = [
   { slug: "terms", label: "Terms of Service", href: "/terms" },
   { slug: "privacy", label: "Privacy Policy", href: "/privacy" },
   { slug: "cookies", label: "Cookie Notice", href: "/cookies" },
   { slug: "license", label: "License", href: "/license" },
+  { slug: "delete-account", label: "Delete Account", href: "/delete-account" },
 ];
 
 type LegalPageLayoutProps = {
