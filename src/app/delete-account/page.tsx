@@ -4,58 +4,58 @@ import { SUPPORT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Delete Your Account",
-  description: "How to delete your Ordly account and the data stored with it.",
+  description: "How to delete your Ordly account and synced data.",
 };
-
 
 export default function DeleteAccountPage() {
   return (
     <LegalPageLayout
       active="delete-account"
-      title="Delete Your Ordly Account"
-      subtitle="You can permanently delete your Ordly account and its cloud data at any time."
+      title="Delete Your Account"
+      subtitle="Permanently remove your Ordly account and cloud data anytime."
       lastUpdated="November 25, 2026"
     >
-      <section className="space-y-3">
-        <h2 className="text-xl font-bold text-[#211340]">Delete in the app</h2>
-        <ol className="list-decimal space-y-1.5 pl-6">
-          <li>Open Ordly and log in to the account you want to delete.</li>
-          <li>Go to <strong className="text-[#211340]">Profile → Delete Account</strong>.</li>
-          <li>
-            Choose <strong className="text-[#211340]">Delete Account Only</strong> (keeps your
-            data on this device) or <strong className="text-[#211340]">Delete Everything</strong>,
-            then confirm.
-          </li>
-        </ol>
-        <p>Deletion happens immediately. Logging in again will not restore the account.</p>
-      </section>
+      <p className="font-semibold text-[#17112E]">
+        You can delete your Ordly account directly inside the app in just a few
+        taps — deletion takes effect immediately.
+      </p>
+
+      <p>
+        Open Ordly, sign in to your account, and go to{" "}
+        <strong className="font-semibold text-[#17112E]">
+          Profile → Delete Account
+        </strong>
+        . Choose{" "}
+        <strong className="font-semibold text-[#17112E]">
+          Delete Account Only
+        </strong>{" "}
+        to keep your local data on your phone, or{" "}
+        <strong className="font-semibold text-[#17112E]">
+          Delete Everything
+        </strong>{" "}
+        to erase both your cloud account and local entries.
+      </p>
+
+      <p>
+        Deleting your account permanently removes your email login and all
+        cloud-synced budgets, transactions, bills, calendar events, and tasks.
+        If you have an active subscription, remember to cancel it separately in
+        your Apple App Store or Google Play subscription settings.
+      </p>
 
       {SUPPORT_EMAIL ? (
-        <section className="space-y-3">
-          <h2 className="text-xl font-bold text-[#211340]">No longer have the app?</h2>
-          <p>
-            Email{" "}
-            <a className="font-medium text-[#7939DF] underline" href={`mailto:${SUPPORT_EMAIL}?subject=Delete%20my%20Ordly%20account`}>
-              {SUPPORT_EMAIL}
-            </a>{" "}
-            from the email address of your Ordly account with the subject &quot;Delete my Ordly
-            account&quot;. We will delete it within 7 days and confirm by email.
-          </p>
-        </section>
-      ) : null}
-
-      <section className="space-y-3">
-        <h2 className="text-xl font-bold text-[#211340]">What is deleted</h2>
-        <ul className="list-disc space-y-1.5 pl-6">
-          <li>Your login (email and password).</li>
-          <li>All cloud-synced data: profile, budgets, transactions, bills, events, and tasks.</li>
-          <li>Diagnostic error reports are kept for up to 90 days without any link to you.</li>
-        </ul>
         <p>
-          Subscriptions are billed by Apple or Google. Deleting your account does not cancel
-          them; cancel in your App Store or Google Play subscription settings.
+          No longer have the app installed? Email{" "}
+          <a
+            href={`mailto:${SUPPORT_EMAIL}?subject=Delete%20my%20Ordly%20account`}
+            className="font-medium text-[#7939DF] underline"
+          >
+            {SUPPORT_EMAIL}
+          </a>{" "}
+          from your Ordly account email with the subject &ldquo;Delete my Ordly
+          account&rdquo; and we will delete it within 7 days.
         </p>
-      </section>
+      ) : null}
     </LegalPageLayout>
   );
 }

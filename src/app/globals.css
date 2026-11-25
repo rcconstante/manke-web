@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --ordly-primary: #7940d4;
+  --ordly-primary: #8b3fe8;
   --ordly-primary-vibrant: #7939df;
   --ordly-primary-dark: #5b23b5;
-  --ordly-lavender-soft: #f7eeff;
-  --ordly-lavender-border: #dac1fa;
-  --ordly-surface: #ffffff;
-  --ordly-surface-muted: #faf7ff;
-  --ordly-ink: #211340;
-  --ordly-ink-muted: #5c4e78;
-  --ordly-border: #e9ddfc;
+  --ordly-lavender-soft: #f3e8ff;
+  --ordly-lavender-border: #e4d4fb;
+  --ordly-surface: #fafafc;
+  --ordly-card: #ffffff;
+  --ordly-ink: #17112e;
+  --ordly-ink-muted: #5c5470;
+  --ordly-border: #ece7f6;
 }
 
 @theme inline {
@@ -35,4 +35,13 @@ body {
   background: var(--ordly-surface);
   color: var(--ordly-ink);
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+}
+
+/* Hide scrollbars cleanly on horizontal screenshot strip */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

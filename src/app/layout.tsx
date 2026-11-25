@@ -17,19 +17,19 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://get-ordly.vercel.app"),
   title: {
-    default: "Ordly — Plan · Track · Spend",
+    default: "Ordly — Your all-in-one life & budget app",
     template: "%s | Ordly",
   },
   description:
-    "Ordly brings your calendar, budget, bills, and daily checklists together in one calm, focused mobile app.",
+    "Track spending, plan your schedule, manage recurring bills, and stay on top of daily tasks in one calm mobile app — works offline first, with optional cloud sync.",
   icons: {
     icon: "/favicon.png",
     apple: "/logo.png",
   },
   openGraph: {
-    title: "Ordly — Plan · Track · Spend",
+    title: "Ordly — Your all-in-one life & budget app",
     description:
-      "Plan your days, track your budget and bills, and check off what matters most with Ordly.",
+      "Track spending, plan your schedule, manage recurring bills, and stay on top of daily tasks in one calm mobile app.",
     url: "https://get-ordly.vercel.app",
     siteName: "Ordly",
     images: [{ url: "/logo.png", width: 512, height: 512, alt: "Ordly Logo" }],
@@ -43,7 +43,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-white text-[#211340]">
+      <body className="min-h-full flex flex-col bg-[#FAFAFC] text-[#17112E]">
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

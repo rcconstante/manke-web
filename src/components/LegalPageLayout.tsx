@@ -3,12 +3,12 @@ import type { ReactNode } from "react";
 
 type LegalSlug = "terms" | "privacy" | "cookies" | "license" | "delete-account";
 
-const LEGAL_TABS: { slug: LegalSlug; label: string; href: string }[] = [
-  { slug: "terms", label: "Terms of Service", href: "/terms" },
+const LEGAL_LINKS: { slug: LegalSlug; label: string; href: string }[] = [
+  { slug: "terms", label: "Terms of Use", href: "/terms" },
   { slug: "privacy", label: "Privacy Policy", href: "/privacy" },
-  { slug: "cookies", label: "Cookie Notice", href: "/cookies" },
-  { slug: "license", label: "License", href: "/license" },
   { slug: "delete-account", label: "Delete Account", href: "/delete-account" },
+  { slug: "cookies", label: "Cookies", href: "/cookies" },
+  { slug: "license", label: "License", href: "/license" },
 ];
 
 type LegalPageLayoutProps = {
@@ -27,47 +27,46 @@ export function LegalPageLayout({
   children,
 }: LegalPageLayoutProps) {
   return (
-    <div>
-      <section className="bg-gradient-to-br from-[#7940D4] via-[#7939DF] to-[#5B23B5] px-5 py-12 text-white sm:px-8 sm:py-16">
-        <div className="mx-auto max-w-4xl">
-          <p className="text-xs font-semibold tracking-widest text-[#F7EEFF] uppercase">
-            Ordly Legal
+    <div className="bg-[#FAFAFC]">
+      <article className="mx-auto max-w-2xl px-5 py-16 sm:px-8 sm:py-24">
+        <header className="text-center">
+          <p className="text-xs font-bold tracking-[0.14em] text-[#7939DF] uppercase">
+            Legal
           </p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+          <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-[#17112E] sm:text-5xl">
             {title}
           </h1>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#F7EEFF] sm:text-base">
-            {subtitle}
-          </p>
-          <p className="mt-4 text-xs text-[#DAC1FA]">
-            Last updated: {lastUpdated}
-          </p>
-        </div>
-      </section>
+          <p className="mt-3 text-base text-[#6B6480]">{subtitle}</p>
+        </header>
 
-      <div className="border-b border-[#E9DDFC] bg-[#FAF7FF]">
-        <div className="mx-auto flex max-w-4xl flex-wrap gap-2 px-5 py-3 sm:px-8">
-          {LEGAL_TABS.map((tab) => {
-            const isActive = tab.slug === active;
-            return (
-              <Link
-                key={tab.slug}
-                href={tab.href}
-                className={`rounded-full px-4 py-1.5 text-xs font-semibold transition sm:text-sm ${
-                  isActive
-                    ? "bg-[#7940D4] text-white"
-                    : "bg-white text-[#5C4E78] ring-1 ring-[#E9DDFC] hover:text-[#7940D4]"
-                }`}
-              >
-                {tab.label}
-              </Link>
-            );
-          })}
+        <div className="mt-12 space-y-5 text-[15px] leading-[1.8] text-[#4E4663] sm:text-base">
+          {children}
         </div>
-      </div>
 
-      <article className="mx-auto max-w-4xl space-y-8 px-5 py-10 text-sm leading-relaxed text-[#5C4E78] sm:px-8 sm:py-14 sm:text-base">
-        {children}
+        <footer className="mt-14 border-t border-[#E9E4F5] pt-8">
+          <p className="text-xs text-[#857D9B]">Last updated: {lastUpdated}</p>
+          <nav
+            aria-label="Legal pages"
+            className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm"
+          >
+            {LEGAL_LINKS.map((item) => {
+              const isActive = item.slug === active;
+              return (
+                <Link
+                  key={item.slug}
+                  href={item.href}
+                  className={
+                    isActive
+                      ? "font-semibold text-[#7939DF]"
+                      : "text-[#6B6480] transition hover:text-[#17112E]"
+                  }
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+        </footer>
       </article>
     </div>
   );
