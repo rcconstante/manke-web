@@ -47,6 +47,10 @@ const APP_SCREENSHOTS = [
     src: "/screenshots/05-ordly-themes-widgets.webp",
     alt: "Ordly Profile & Themes — Make Ordly truly yours",
   },
+  {
+    src: "/screenshots/06-ordly-home-widgets.webp",
+    alt: "Ordly Home Screen Widgets — Your budget, right on your home screen",
+  },
 ];
 
 const HERO_AVATARS = [
@@ -253,7 +257,7 @@ export default function HomePage() {
       {/* Full-Width App Store Screenshot Showcase */}
       <section id="screenshots" className="py-10 sm:py-16">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-8">
-          <div className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 lg:grid lg:grid-cols-5 lg:gap-5 lg:overflow-visible lg:pb-0">
+          <div className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 lg:grid lg:grid-cols-6 lg:gap-5 lg:overflow-visible lg:pb-0">
             {APP_SCREENSHOTS.map((shot) => (
               <div
                 key={shot.src}
@@ -269,6 +273,30 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Promo Video */}
+      <section id="video" className="mx-auto max-w-5xl px-5 py-10 sm:px-8 sm:py-16">
+        <div className="text-center">
+          <h2 className="text-3xl font-extrabold tracking-tight text-[#17112E] sm:text-4xl">
+            See Ordly in action
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-[#6B6480]">
+            Budgets, bills, schedules, tasks and widgets — all in one place.
+          </p>
+        </div>
+        <div className="mx-auto mt-8 w-full max-w-[340px] overflow-hidden rounded-[32px] border border-[#E7DDF8] bg-[#F3E8FF] shadow-[0_22px_44px_-12px_rgba(121,57,223,0.25)]">
+          <video
+            className="block aspect-[9/16] h-auto w-full"
+            src="/video/ordly-promo.mp4"
+            poster="/video/ordly-promo-poster.webp"
+            controls
+            playsInline
+            preload="none"
+          >
+            <track kind="captions" src="/video/ordly-promo.vtt" srcLang="en" label="English" />
+          </video>
         </div>
       </section>
 
