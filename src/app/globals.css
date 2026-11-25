@@ -1,28 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  --ordly-primary: #8b3fe8;
-  --ordly-primary-vibrant: #7939df;
-  --ordly-primary-dark: #5b23b5;
-  --ordly-lavender-soft: #f3e8ff;
-  --ordly-lavender-border: #e4d4fb;
-  --ordly-surface: #fafafc;
-  --ordly-card: #ffffff;
-  --ordly-ink: #17112e;
-  --ordly-ink-muted: #5c5470;
-  --ordly-border: #ece7f6;
+  --manke-primary: #1d6bf3;
+  --manke-primary-vibrant: #2b8cf8;
+  --manke-primary-dark: #1554d1;
+  --manke-sky-soft: #ebf3ff;
+  --manke-sky-border: #cbe0ff;
+  --manke-surface: #f8faff;
+  --manke-card: #ffffff;
+  --manke-ink: #0f172a;
+  --manke-ink-muted: #475569;
+  --manke-border: #e2e8f0;
 }
 
 @theme inline {
-  --color-background: var(--ordly-surface);
-  --color-foreground: var(--ordly-ink);
-  --color-ordly-primary: var(--ordly-primary);
-  --color-ordly-vibrant: var(--ordly-primary-vibrant);
-  --color-ordly-dark: var(--ordly-primary-dark);
-  --color-ordly-lavender: var(--ordly-lavender-soft);
-  --color-ordly-border: var(--ordly-border);
-  --color-ordly-ink: var(--ordly-ink);
-  --color-ordly-muted: var(--ordly-ink-muted);
+  --color-background: var(--manke-surface);
+  --color-foreground: var(--manke-ink);
+  --color-manke-primary: var(--manke-primary);
+  --color-manke-vibrant: var(--manke-primary-vibrant);
+  --color-manke-dark: var(--manke-primary-dark);
+  --color-manke-sky: var(--manke-sky-soft);
+  --color-manke-border: var(--manke-border);
+  --color-manke-ink: var(--manke-ink);
+  --color-manke-muted: var(--manke-ink-muted);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -32,8 +32,8 @@ html {
 }
 
 body {
-  background: var(--ordly-surface);
-  color: var(--ordly-ink);
+  background: var(--manke-surface);
+  color: var(--manke-ink);
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
 }
 

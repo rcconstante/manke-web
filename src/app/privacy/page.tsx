@@ -5,7 +5,7 @@ import { SUPPORT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "Simple overview of how Ordly handles your data.",
+  description: "Simple overview of how Manke handles your data.",
 };
 
 export default function PrivacyPage() {
@@ -13,11 +13,11 @@ export default function PrivacyPage() {
     <LegalPageLayout
       active="privacy"
       title="Privacy Policy"
-      subtitle="Simple, clear privacy practices for Ordly."
-      lastUpdated="November 25, 2026"
+      subtitle="Simple, clear privacy practices for Manke."
+      lastUpdated="November 26, 2026"
     >
-      <p className="font-semibold text-[#17112E]">
-        Ordly is offline first. Without an account, everything you enter stays
+      <p className="font-semibold text-[#0F172A]">
+        Manke is offline first. Without an account, everything you enter stays
         strictly on your device and is never sent to our servers.
       </p>
 
@@ -33,7 +33,7 @@ export default function PrivacyPage() {
         Subscriptions are processed by Apple App Store or Google Play and
         verified via RevenueCat using an anonymous app user ID. We never see or
         store your credit card or bank details. If an unexpected error occurs,
-        Ordly may send a minimal technical diagnostic report (error code,
+        Manke may send a minimal technical diagnostic report (error code,
         platform, and OS version) without any of your financial entries.
       </p>
 
@@ -46,13 +46,13 @@ export default function PrivacyPage() {
       <p>
         You stay in control of your data. You can export your data anytime in
         the app, or permanently delete your account and cloud data under{" "}
-        <strong className="font-semibold text-[#17112E]">
-          Profile → Delete Account
+        <strong className="font-semibold text-[#0F172A]">
+          Settings → Delete Account
         </strong>{" "}
         (or read our{" "}
         <Link
           href="/delete-account"
-          className="font-medium text-[#7939DF] underline"
+          className="font-medium text-[#1D6BF3] underline"
         >
           account deletion guide
         </Link>
@@ -61,7 +61,7 @@ export default function PrivacyPage() {
       </p>
 
       <p>
-        Ordly is not directed to children under 13. We will update this page if
+        Manke is not directed to children under 13. We will update this page if
         our privacy practices change.
         {SUPPORT_EMAIL ? (
           <>
@@ -69,7 +69,7 @@ export default function PrivacyPage() {
             Questions about your privacy? Email{" "}
             <a
               href={`mailto:${SUPPORT_EMAIL}`}
-              className="font-medium text-[#7939DF] underline"
+              className="font-medium text-[#1D6BF3] underline"
             >
               {SUPPORT_EMAIL}
             </a>

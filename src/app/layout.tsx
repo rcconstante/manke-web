@@ -15,24 +15,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://get-ordly.vercel.app"),
+  metadataBase: new URL("https://get-manke.vercel.app"),
   title: {
-    default: "Ordly — Your all-in-one life & budget app",
-    template: "%s | Ordly",
+    default: "Manke — Your all-in-one life & budget app",
+    template: "%s | Manke",
   },
   description:
-    "Track spending, plan your schedule, manage recurring bills, and stay on top of daily tasks in one calm mobile app — works offline first, with optional cloud sync.",
+    "Track savings, plan your schedule, manage recurring bills, and stay on top of daily tasks in one calm mobile app — works offline first, with optional cloud sync.",
   icons: {
     icon: "/favicon.png",
     apple: "/logo.png",
   },
   openGraph: {
-    title: "Ordly — Your all-in-one life & budget app",
+    title: "Manke — Your all-in-one life & budget app",
     description:
-      "Track spending, plan your schedule, manage recurring bills, and stay on top of daily tasks in one calm mobile app.",
-    url: "https://get-ordly.vercel.app",
-    siteName: "Ordly",
-    images: [{ url: "/logo.png", width: 512, height: 512, alt: "Ordly Logo" }],
+      "Track savings, plan your schedule, manage recurring bills, and stay on top of daily tasks in one calm mobile app.",
+    url: "https://get-manke.vercel.app",
+    siteName: "Manke",
+    images: [{ url: "/logo.png", width: 512, height: 512, alt: "Manke Logo" }],
     type: "website",
   },
 };

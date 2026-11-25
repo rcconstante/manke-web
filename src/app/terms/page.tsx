@@ -4,7 +4,7 @@ import { SUPPORT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Terms of Use",
-  description: "Simple terms for using Ordly.",
+  description: "Simple terms for using Manke.",
 };
 
 export default function TermsPage() {
@@ -12,19 +12,19 @@ export default function TermsPage() {
     <LegalPageLayout
       active="terms"
       title="Terms of Use"
-      subtitle="Simple terms for using Ordly."
-      lastUpdated="November 25, 2026"
+      subtitle="Simple terms for using Manke."
+      lastUpdated="November 26, 2026"
     >
-      <p className="font-semibold text-[#17112E]">
-        Ordly is a personal planning and budgeting app for everyday individual
+      <p className="font-semibold text-[#0F172A]">
+        Manke is a personal planning and budgeting app for everyday individual
         use. You are responsible for how you use the app and for keeping your
         device, account credentials, and backups secure.
       </p>
 
       <p>
-        Ordly is free to download and works offline on your device without an
+        Manke is free to download and works offline on your device without an
         account. Core budgeting, calendar, bill reminders, and checklist tools
-        are available right away. Optional Ordly VIP plans unlock extra features
+        are available right away. Optional Manke VIP plans unlock extra features
         such as cloud sync, custom themes, home screen widgets, and extended
         insights.
       </p>
@@ -44,14 +44,14 @@ export default function TermsPage() {
       </p>
 
       <p>
-        Ordly is intended for personal organization only and does not provide
+        Manke is intended for personal organization only and does not provide
         financial, tax, or legal advice. The app is provided &ldquo;as is&rdquo;
         without warranties, and we are not liable for missed payments,
         budgeting discrepancies, or indirect damages from using the app.
       </p>
 
       <p>
-        We may update these terms from time to time. Continued use of Ordly
+        We may update these terms from time to time. Continued use of Manke
         after changes are posted means you accept the updated terms.
         {SUPPORT_EMAIL ? (
           <>
@@ -59,7 +59,7 @@ export default function TermsPage() {
             Questions? Contact us at{" "}
             <a
               href={`mailto:${SUPPORT_EMAIL}`}
-              className="font-medium text-[#7939DF] underline"
+              className="font-medium text-[#1D6BF3] underline"
             >
               {SUPPORT_EMAIL}
             </a>

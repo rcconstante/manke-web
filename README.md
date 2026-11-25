@@ -1,20 +1,22 @@
 <p align="center">
-  <img src="./public/logo.png" alt="Ordly Logo" width="120" />
+  <img src="./public/logo.png" alt="Manke Logo" width="110" />
 </p>
 
-<h1 align="center">Ordly Web</h1>
+<h1 align="center">Manke Web</h1>
 
 <p align="center">
-  Official landing page and legal portal for <strong>Ordly</strong> — deployed at <a href="https://get-ordly.vercel.app">get-ordly.vercel.app</a>.
+  Official landing page, interactive Figma-style screen playground, and legal portal for <strong>Manke</strong>.
 </p>
 
 ---
 
 ## Pages
 
-- `/` — Landing page & feature overview (Home, Calendar, Budget, Bills, Checklist, Profile)
-- `/terms` — Terms of Service
+- `/` — Landing page, feature overview & App Store screenshot showcase
+- `/playground` — Interactive Figma-style screen canvas, prototype flow wiring, live theme switcher, and full-screen gallery for client review
+- `/terms` — Terms of Use
 - `/privacy` — Privacy Policy
+- `/delete-account` — Account Deletion Guide
 - `/cookies` — Cookie Notice
 - `/license` — MIT License & Open-Source Attributions
 
@@ -25,8 +27,8 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) or [http://localhost:3000/playground](http://localhost:3000/playground).
 
 ## Deployment
 
-Connect this repository to Vercel and assign the domain `https://get-ordly.vercel.app/`.
+Deployed automatically on Vercel from `main`. Set optional `NEXT_PUBLIC_APP_STORE_URL`, `NEXT_PUBLIC_PLAY_STORE_URL`, and `NEXT_PUBLIC_SUPPORT_EMAIL` in Vercel Project Settings.

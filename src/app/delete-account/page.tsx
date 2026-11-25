@@ -4,7 +4,7 @@ import { SUPPORT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Delete Your Account",
-  description: "How to delete your Ordly account and synced data.",
+  description: "How to delete your Manke account and synced data.",
 };
 
 export default function DeleteAccountPage() {
@@ -12,25 +12,25 @@ export default function DeleteAccountPage() {
     <LegalPageLayout
       active="delete-account"
       title="Delete Your Account"
-      subtitle="Permanently remove your Ordly account and cloud data anytime."
-      lastUpdated="November 25, 2026"
+      subtitle="Permanently remove your Manke account and cloud data anytime."
+      lastUpdated="November 26, 2026"
     >
-      <p className="font-semibold text-[#17112E]">
-        You can delete your Ordly account directly inside the app in just a few
+      <p className="font-semibold text-[#0F172A]">
+        You can delete your Manke account directly inside the app in just a few
         taps — deletion takes effect immediately.
       </p>
 
       <p>
-        Open Ordly, sign in to your account, and go to{" "}
-        <strong className="font-semibold text-[#17112E]">
-          Profile → Delete Account
+        Open Manke, sign in to your account, and go to{" "}
+        <strong className="font-semibold text-[#0F172A]">
+          Settings → Delete Account
         </strong>
         . Choose{" "}
-        <strong className="font-semibold text-[#17112E]">
+        <strong className="font-semibold text-[#0F172A]">
           Delete Account Only
         </strong>{" "}
         to keep your local data on your phone, or{" "}
-        <strong className="font-semibold text-[#17112E]">
+        <strong className="font-semibold text-[#0F172A]">
           Delete Everything
         </strong>{" "}
         to erase both your cloud account and local entries.
@@ -47,12 +47,12 @@ export default function DeleteAccountPage() {
         <p>
           No longer have the app installed? Email{" "}
           <a
-            href={`mailto:${SUPPORT_EMAIL}?subject=Delete%20my%20Ordly%20account`}
-            className="font-medium text-[#7939DF] underline"
+            href={`mailto:${SUPPORT_EMAIL}?subject=Delete%20my%20Manke%20account`}
+            className="font-medium text-[#1D6BF3] underline"
           >
             {SUPPORT_EMAIL}
           </a>{" "}
-          from your Ordly account email with the subject &ldquo;Delete my Ordly
+          from your Manke account email with the subject &ldquo;Delete my Manke
           account&rdquo; and we will delete it within 7 days.
         </p>
       ) : null}
