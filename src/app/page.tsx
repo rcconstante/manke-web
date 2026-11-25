@@ -188,7 +188,7 @@ export default function HomePage() {
 
                 <div className="relative overflow-hidden rounded-[36px] bg-white">
                   {/* iOS Status Bar + Dynamic Island */}
-                  <div className="flex items-center justify-between bg-[#EDF4FF] px-5 pt-2.5 pb-1.5">
+                  <div className="flex items-center justify-between bg-[#DCEBFF] px-5 pt-2.5 pb-1.5">
                     <span className="text-[11px] font-bold tracking-tight text-[#0F172A]">
                       9:41
                     </span>
@@ -297,13 +297,13 @@ export default function HomePage() {
         <div className="mx-auto mt-8 w-full max-w-[340px] overflow-hidden rounded-[32px] border border-[#CBE0FF] bg-[#EBF3FF] shadow-[0_22px_44px_-12px_rgba(29,107,243,0.22)]">
           <video
             className="block aspect-[9/16] h-auto w-full"
-            src="/video/ordly-promo.mp4"
-            poster="/video/ordly-promo-poster.webp"
+            src="/video/manke-promo.mp4"
+            poster="/video/manke-promo-poster.webp"
             controls
             playsInline
             preload="none"
           >
-            <track kind="captions" src="/video/ordly-promo.vtt" srcLang="en" label="English" />
+            <track kind="captions" src="/video/manke-promo.vtt" srcLang="en" label="English" />
           </video>
         </div>
       </section>
