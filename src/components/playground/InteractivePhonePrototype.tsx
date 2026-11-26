@@ -66,8 +66,8 @@ const SCREEN_META: Record<PrototypeScreenId, ScreenMeta> = {
   },
   budget: {
     id: "budget",
-    badge: "Tab 3 · Budget",
-    title: "Budget, Bills & Transactions",
+    badge: "Tab 3 · Finance",
+    title: "Finance, Bills & Transactions",
     note: "Home-style gradient hero card with Bills and Transactions tabs (By Category lives inside Transactions). Tap any bill row for Bill Detail or tap Reports & Insights.",
     isModal: false,
     defaultBack: "home",
@@ -214,7 +214,7 @@ const QUICK_JUMP_MAIN: { id: PrototypeScreenId; label: string }[] = [
   { id: "onboarding", label: "Onboarding" },
   { id: "home", label: "Home" },
   { id: "calendar", label: "Calendar" },
-  { id: "budget", label: "Budget" },
+  { id: "budget", label: "Finance" },
   { id: "tasks", label: "Tasks" },
   { id: "settings", label: "Settings" },
 ];
@@ -353,27 +353,27 @@ export function InteractivePhonePrototype({
         if (budgetTab === "transactions") {
           return {
             src: "/playground/03-budget-transactions.webp",
-            label: "Budget · Transactions",
+            label: "Finance · Transactions",
             topBg: "#DCEBFF",
           };
         }
         if (budgetTab === "categories") {
           return {
             src: "/playground/03-budget-categories.webp",
-            label: "Budget · Categories",
+            label: "Finance · Categories",
             topBg: "#DCEBFF",
           };
         }
         return isDark
           ? {
               src: "/playground/03-budget-dark.webp",
-              label: "Budget · Dark",
+              label: "Finance · Dark",
               topBg: "#13203A",
               darkStatusBar: true,
             }
           : {
               src: "/playground/03-budget-bills.webp",
-              label: "Budget · Bills",
+              label: "Finance · Bills",
               topBg: "#DCEBFF",
             };
       case "tasks":
@@ -578,8 +578,8 @@ export function InteractivePhonePrototype({
         top: 91.5,
         width: 20,
         height: 8.5,
-        label: "Budget Tab",
-        onClick: () => navigateTab("budget", "Switched to Budget tab"),
+        label: "Finance Tab",
+        onClick: () => navigateTab("budget", "Switched to Finance tab"),
       },
       {
         id: "tab-tasks",
@@ -1384,7 +1384,7 @@ export function InteractivePhonePrototype({
             {screen === "budget" && (
               <div className="mt-4 flex flex-wrap items-center gap-2 rounded-2xl bg-slate-50 px-3.5 py-2.5">
                 <span className="text-[11px] font-bold tracking-wider text-slate-400 uppercase">
-                  Budget Segment:
+                  Finance Segment:
                 </span>
                 {(["bills", "transactions", "categories"] as const).map(
                   (seg) => (

@@ -121,10 +121,10 @@ const SCREENS: ScreenNode[] = [
   {
     id: "budget",
     code: "04",
-    title: "Budget",
+    title: "Finance",
     group: "Core 5 Tabs",
     summary:
-      "Unified Budget hub with Remaining ring, Income vs Expenses, Reports & Insights pill, and Bills / Transactions / Categories tabs.",
+      "Unified Finance hub with Home-style gradient hero card, Income vs Expenses, Reports & Insights pill, and Bills / Transactions (with By Category filter).",
     x: 1440,
     y: 60,
     variants: [
@@ -524,7 +524,7 @@ const WIRES: FlowWire[] = [
     id: "w-cal-budget",
     from: "calendar",
     to: "budget",
-    label: "Budget Tab",
+    label: "Finance Tab",
     fromSide: "right",
     toSide: "left",
   },
