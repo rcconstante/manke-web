@@ -84,7 +84,7 @@ const SCREEN_META: Record<PrototypeScreenId, ScreenMeta> = {
     id: "settings",
     badge: "Tab 5 · Settings",
     title: "Settings Menu",
-    note: "Clean 7-row menu with custom Manke artwork. Tap Account, Appearance & Themes, Preferences, Widget, Data & Backup, Language, or About Manke.",
+    note: "Clean 7-row menu with crisp Hugeicons. Tap Account, Appearance & Themes, Preferences, Widget, Data & Backup, Language, or About Manke.",
     isModal: false,
     defaultBack: "home",
   },
