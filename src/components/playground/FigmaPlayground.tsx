@@ -3,25 +3,24 @@
 import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { RealPhoneFrame, type RealScreenCapture } from "./RealPhoneFrame";
+import {
+  InteractivePhonePrototype,
+  type PrototypeScreenId,
+} from "./InteractivePhonePrototype";
 
-type ScreenId =
-  | "onboarding"
-  | "home"
-  | "calendar"
-  | "budget"
-  | "bills"
-  | "tasks"
-  | "profile"
-  | "reports"
-  | "themes"
-  | "widgets"
-  | "signin";
+type ScreenId = PrototypeScreenId;
+
+type ScreenGroup =
+  | "Onboarding"
+  | "Core 5 Tabs"
+  | "Forms & Modals"
+  | "Settings Sub-Screens";
 
 interface ScreenNode {
   id: ScreenId;
   code: string;
   title: string;
-  group: "Onboarding" | "Core 6 Tabs" | "Modals & Sub-Screens";
+  group: ScreenGroup;
   summary: string;
   x: number;
   y: number;
@@ -34,23 +33,31 @@ interface FlowWire {
   from: ScreenId;
   to: ScreenId;
   label: string;
-  fromSide: "right" | "bottom";
-  toSide: "left" | "top";
+  fromSide: "right" | "bottom" | "left";
+  toSide: "left" | "top" | "right";
 }
 
 const CARD_W = 268;
 const CARD_H = 582;
 
+const SCREEN_GROUPS: ScreenGroup[] = [
+  "Onboarding",
+  "Core 5 Tabs",
+  "Forms & Modals",
+  "Settings Sub-Screens",
+];
+
 const SCREENS: ScreenNode[] = [
+  // Row 1: Onboarding & Core 5 Tabs
   {
     id: "onboarding",
     code: "01",
-    title: "Welcome / Get Started",
+    title: "Onboarding",
     group: "Onboarding",
     summary:
-      "Single-button offline-first entry straight into Manke Home — zero forced sign-up wall.",
+      "Single-button offline-first welcome screen straight into Manke Home — zero forced sign-up wall.",
     x: 40,
-    y: 40,
+    y: 60,
     variants: [
       {
         src: "/playground/00-onboarding.webp",
@@ -63,12 +70,12 @@ const SCREENS: ScreenNode[] = [
   {
     id: "home",
     code: "02",
-    title: "Home Dashboard",
-    group: "Core 6 Tabs",
+    title: "Home",
+    group: "Core 5 Tabs",
     summary:
-      "Greeting header, Budget Remaining hero card, Today's Schedule, Upcoming Bills, and Pending Tasks.",
-    x: 400,
-    y: 40,
+      "Greeting header, Notifications bell, Budget Remaining hero card, Today's Schedule, Upcoming Bills, and Pending Tasks.",
+    x: 390,
+    y: 60,
     variants: [
       {
         src: "/playground/01-home-light.webp",
@@ -86,12 +93,12 @@ const SCREENS: ScreenNode[] = [
   {
     id: "calendar",
     code: "03",
-    title: "Calendar & Schedule",
-    group: "Core 6 Tabs",
+    title: "Calendar",
+    group: "Core 5 Tabs",
     summary:
-      "Week & Month toggle, color-coded event cards, date dots, and + Add Event FAB.",
-    x: 760,
-    y: 40,
+      "Week & Month toggle, color-coded schedule cards, event dots, and + Add Event FAB.",
+    x: 740,
+    y: 60,
     variants: [
       {
         src: "/playground/02-calendar-week.webp",
@@ -114,23 +121,27 @@ const SCREENS: ScreenNode[] = [
   {
     id: "budget",
     code: "04",
-    title: "Budget Tracker",
-    group: "Core 6 Tabs",
+    title: "Budget",
+    group: "Core 5 Tabs",
     summary:
-      "Monthly budget progress ring, Income vs Expenses summary, Spending by Category, and quick Add Transaction sheet.",
-    x: 1120,
-    y: 40,
+      "Unified Budget hub with Remaining ring, Income vs Expenses, Reports & Insights pill, and Bills / Transactions / Categories tabs.",
+    x: 1440,
+    y: 60,
     variants: [
       {
-        src: "/playground/03-budget-light.webp",
-        label: "Overview",
+        src: "/playground/03-budget-bills.webp",
+        label: "Bills",
         topBg: "#DCEBFF",
       },
       {
-        src: "/playground/03-budget-add.webp",
-        label: "Add Sheet",
-        topBg: "#7E839B",
-        darkStatusBar: true,
+        src: "/playground/03-budget-transactions.webp",
+        label: "Transactions",
+        topBg: "#DCEBFF",
+      },
+      {
+        src: "/playground/03-budget-categories.webp",
+        label: "Categories",
+        topBg: "#DCEBFF",
       },
     ],
     darkCapture: {
@@ -141,56 +152,28 @@ const SCREENS: ScreenNode[] = [
     },
   },
   {
-    id: "bills",
-    code: "05",
-    title: "Recurring Bills",
-    group: "Core 6 Tabs",
-    summary:
-      "Track Tuition, Rent, Utilities, and recurring payments — mark bills paid in one tap and auto-sync to Budget.",
-    x: 1480,
-    y: 40,
-    variants: [
-      {
-        src: "/playground/04-bills-light.webp",
-        label: "Bills List",
-        topBg: "#DCEBFF",
-      },
-      {
-        src: "/playground/04-bills-detail.webp",
-        label: "Bill Detail",
-        topBg: "#FFFFFF",
-      },
-      {
-        src: "/playground/04-bills-paid.webp",
-        label: "Marked Paid",
-        topBg: "#FFFFFF",
-      },
-    ],
-    darkCapture: {
-      src: "/playground/04-bills-dark.webp",
-      label: "Dark",
-      topBg: "#13203A",
-      darkStatusBar: true,
-    },
-  },
-  {
     id: "tasks",
-    code: "06",
-    title: "Tasks & Checklist",
-    group: "Core 6 Tabs",
+    code: "05",
+    title: "Tasks",
+    group: "Core 5 Tabs",
     summary:
-      "Today's Productivity % progress card, Tasks / Completed segmented toggle, due-date priority badges, and animated checkboxes.",
-    x: 1840,
-    y: 40,
+      "Today's Productivity % card, Tasks / Completed toggle, live animated checkbox progress, and + New Task FAB.",
+    x: 2140,
+    y: 60,
     variants: [
       {
         src: "/playground/05-tasks-light.webp",
-        label: "Pending",
+        label: "0% Pending",
+        topBg: "#DCEBFF",
+      },
+      {
+        src: "/playground/05-tasks-tick1.webp",
+        label: "1st Ticked",
         topBg: "#DCEBFF",
       },
       {
         src: "/playground/05-tasks-progress.webp",
-        label: "Checked Off",
+        label: "25%+ Progress",
         topBg: "#DCEBFF",
       },
     ],
@@ -202,41 +185,78 @@ const SCREENS: ScreenNode[] = [
     },
   },
   {
-    id: "profile",
-    code: "07",
-    title: "Profile & Settings",
-    group: "Core 6 Tabs",
+    id: "settings",
+    code: "06",
+    title: "Settings",
+    group: "Core 5 Tabs",
     summary:
-      "Account & Cloud Sync, Custom Themes, Home Screen Widgets, Currency, Reminders, and JSON Export / Import.",
-    x: 2200,
-    y: 40,
+      "Clean 7-row Settings menu: Account, Appearance, Themes, Widget, Data & Backup, Language, and About Manke.",
+    x: 2840,
+    y: 60,
     variants: [
       {
-        src: "/playground/07-profile-light.webp",
+        src: "/playground/07-settings-light.webp",
         label: "Light",
         topBg: "#DCEBFF",
       },
     ],
     darkCapture: {
-      src: "/playground/07-profile-dark.webp",
+      src: "/playground/07-settings-dark.webp",
       label: "Dark",
       topBg: "#13203A",
       darkStatusBar: true,
     },
   },
+
+  // Row 2: Forms & Modals
+  {
+    id: "notifications",
+    code: "07",
+    title: "Notifications",
+    group: "Forms & Modals",
+    summary:
+      "Opened from Home's bell icon. Shows upcoming bill alerts and today's scheduled events with Mark all read.",
+    x: 390,
+    y: 800,
+    variants: [
+      {
+        src: "/playground/14-notifications.webp",
+        label: "Notifications",
+        topBg: "#FFFFFF",
+      },
+    ],
+  },
+  {
+    id: "add-event",
+    code: "08",
+    title: "New Event Form",
+    group: "Forms & Modals",
+    summary:
+      "Opened from Calendar + FAB. Title, date, start/end time, repeat cadence, reminders, location, and category.",
+    x: 740,
+    y: 800,
+    variants: [
+      {
+        src: "/playground/15-add-event.webp",
+        label: "New Event",
+        topBg: "#7E839B",
+        darkStatusBar: true,
+      },
+    ],
+  },
   {
     id: "reports",
-    code: "08",
+    code: "09",
     title: "Reports & Insights",
-    group: "Modals & Sub-Screens",
+    group: "Forms & Modals",
     summary:
-      "Opened from Budget → Reports & Insights. Monthly cash flow, savings rate, category breakdown, and task velocity.",
-    x: 1120,
-    y: 760,
+      "Opened from Budget → Reports & Insights. 6-month cash flow chart, savings rate, category breakdown, and bills summary.",
+    x: 1090,
+    y: 800,
     variants: [
       {
         src: "/playground/06-reports.webp",
-        label: "Cash Flow",
+        label: "Cash Flow Top",
         topBg: "#FFFFFF",
       },
       {
@@ -247,36 +267,148 @@ const SCREENS: ScreenNode[] = [
     ],
   },
   {
-    id: "themes",
-    code: "09",
-    title: "Custom Themes & Dark",
-    group: "Modals & Sub-Screens",
+    id: "add-transaction",
+    code: "10",
+    title: "Add Transaction Form",
+    group: "Forms & Modals",
     summary:
-      "Opened from Profile → Custom Theme. Switch System / Light / Dark appearance and 5 curated accent palettes.",
-    x: 1840,
-    y: 760,
+      "Opened from Budget + FAB on Transactions/Categories. Quick Expense or Income sheet with category chips and date.",
+    x: 1440,
+    y: 800,
     variants: [
       {
-        src: "/playground/08-themes-light.webp",
+        src: "/playground/03-budget-add.webp",
+        label: "Add Transaction",
+        topBg: "#7E839B",
+        darkStatusBar: true,
+      },
+    ],
+  },
+  {
+    id: "bill-detail",
+    code: "11",
+    title: "Bill Detail",
+    group: "Forms & Modals",
+    summary:
+      "Opened by tapping any bill in Budget → Bills. Mark bills Paid in one tap and auto-sync payments into Budget.",
+    x: 1790,
+    y: 800,
+    variants: [
+      {
+        src: "/playground/04-bills-detail.webp",
+        label: "Unpaid",
+        topBg: "#FFFFFF",
+      },
+      {
+        src: "/playground/04-bills-paid.webp",
+        label: "Marked Paid",
+        topBg: "#FFFFFF",
+      },
+    ],
+  },
+  {
+    id: "add-bill",
+    code: "12",
+    title: "Add Bill Form",
+    group: "Forms & Modals",
+    summary:
+      "Recurring Bill creation/edit form sheet with amount, first due date, monthly/weekly/yearly recurrence, and reminder alerts.",
+    x: 1790,
+    y: 1540,
+    variants: [
+      {
+        src: "/playground/16-add-bill.webp",
+        label: "Add Recurring Bill",
+        topBg: "#86879B",
+        darkStatusBar: true,
+      },
+    ],
+  },
+  {
+    id: "add-task",
+    code: "13",
+    title: "New Task Form",
+    group: "Forms & Modals",
+    summary:
+      "Opened from Tasks + FAB. Add checklist items with optional due date/time, reminder, priority level, and description.",
+    x: 2140,
+    y: 800,
+    variants: [
+      {
+        src: "/playground/17-add-task.webp",
+        label: "New Task",
+        topBg: "#7E839B",
+        darkStatusBar: true,
+      },
+    ],
+  },
+
+  // Settings Sub-Screens (Rows 2 & 3 on right side)
+  {
+    id: "account",
+    code: "14",
+    title: "Account",
+    group: "Settings Sub-Screens",
+    summary:
+      "Settings → Account. Profile avatar, VIP badge, Cloud Backup & Sync status, Redeem Code, and Log In / Create Account.",
+    x: 2490,
+    y: 800,
+    variants: [
+      {
+        src: "/playground/08-account.webp",
+        label: "Account",
+        topBg: "#FFFFFF",
+      },
+    ],
+  },
+  {
+    id: "appearance",
+    code: "15",
+    title: "Appearance",
+    group: "Settings Sub-Screens",
+    summary:
+      "Settings → Appearance. System/Light/Dark mode, Currency selector, Monthly Budget cap, and Notification reminder switches.",
+    x: 2840,
+    y: 800,
+    variants: [
+      {
+        src: "/playground/09-appearance.webp",
+        label: "Appearance",
+        topBg: "#FFFFFF",
+      },
+    ],
+  },
+  {
+    id: "themes",
+    code: "16",
+    title: "Themes",
+    group: "Settings Sub-Screens",
+    summary:
+      "Settings → Themes sheet. Live appearance switcher and 5 curated accent palettes including Manke Blue and Emerald Teal.",
+    x: 3190,
+    y: 800,
+    variants: [
+      {
+        src: "/playground/10-themes-light.webp",
         label: "Light Sheet",
         topBg: "#7E839B",
         darkStatusBar: true,
       },
       {
-        src: "/playground/08-themes-dark.webp",
+        src: "/playground/10-themes-dark.webp",
         label: "Dark · Blue",
         topBg: "#151934",
         darkStatusBar: true,
       },
       {
-        src: "/playground/08-themes-accent.webp",
+        src: "/playground/10-themes-accent.webp",
         label: "Dark · Teal",
         topBg: "#131D2A",
         darkStatusBar: true,
       },
     ],
     darkCapture: {
-      src: "/playground/08-themes-dark.webp",
+      src: "/playground/10-themes-dark.webp",
       label: "Dark · Blue",
       topBg: "#151934",
       darkStatusBar: true,
@@ -284,43 +416,96 @@ const SCREENS: ScreenNode[] = [
   },
   {
     id: "widgets",
-    code: "10",
-    title: "Home Screen Widgets",
-    group: "Modals & Sub-Screens",
+    code: "17",
+    title: "Widget Studio",
+    group: "Settings Sub-Screens",
     summary:
-      "Opened from Profile → Home Screen Widgets. Live iOS WidgetKit & Android widget previews for Budget, Bills, and Tasks.",
-    x: 2200,
-    y: 760,
+      "Settings → Widget. Live iOS WidgetKit & Android Home Screen widget previews for Budget, Upcoming Bills, and Pending Tasks.",
+    x: 3540,
+    y: 800,
     variants: [
       {
-        src: "/playground/09-widgets.webp",
-        label: "Widgets Studio",
+        src: "/playground/11-widgets.webp",
+        label: "Widget Studio",
         topBg: "#FFFFFF",
       },
     ],
   },
   {
     id: "signin",
-    code: "11",
-    title: "Cloud Sync Sign In",
-    group: "Modals & Sub-Screens",
+    code: "18",
+    title: "Sign In",
+    group: "Settings Sub-Screens",
     summary:
-      "Optional authentication opened from Profile → Cloud Backup & Sync to back up and sync data across devices.",
-    x: 2560,
-    y: 760,
+      "Optional Cloud Sync Sign In opened from Account or Data & Backup to securely sync workspace data across devices.",
+    x: 2490,
+    y: 1540,
     variants: [
       {
-        src: "/playground/10-signin.webp",
+        src: "/playground/13-signin.webp",
         label: "Sign In",
         topBg: "#B1D0FA",
+      },
+    ],
+  },
+  {
+    id: "data-backup",
+    code: "19",
+    title: "Data & Backup",
+    group: "Settings Sub-Screens",
+    summary:
+      "Settings → Data & Backup. Cloud Backup & Sync, JSON export/import, reset demo records, and clear local workspace.",
+    x: 2840,
+    y: 1540,
+    variants: [
+      {
+        src: "/playground/12-data-backup.webp",
+        label: "Data & Backup",
+        topBg: "#FFFFFF",
+      },
+    ],
+  },
+  {
+    id: "language",
+    code: "20",
+    title: "Language",
+    group: "Settings Sub-Screens",
+    summary:
+      "Settings → Language bottom sheet with default app language selection and future localization support.",
+    x: 3190,
+    y: 1540,
+    variants: [
+      {
+        src: "/playground/18-language.webp",
+        label: "Language",
+        topBg: "#7E839B",
+        darkStatusBar: true,
+      },
+    ],
+  },
+  {
+    id: "about",
+    code: "21",
+    title: "About Manke",
+    group: "Settings Sub-Screens",
+    summary:
+      "Settings → About Manke. Version 1.0.0, website, Terms of Service, Privacy Policy, Open Source License, and Rate Manke.",
+    x: 3540,
+    y: 1540,
+    variants: [
+      {
+        src: "/playground/19-about.webp",
+        label: "About Manke",
+        topBg: "#FFFFFF",
       },
     ],
   },
 ];
 
 const WIRES: FlowWire[] = [
+  // Top row 5-tab core flow
   {
-    id: "w1",
+    id: "w-onboard-home",
     from: "onboarding",
     to: "home",
     label: "Get Started",
@@ -328,15 +513,15 @@ const WIRES: FlowWire[] = [
     toSide: "left",
   },
   {
-    id: "w2",
+    id: "w-home-cal",
     from: "home",
     to: "calendar",
-    label: "View Calendar",
+    label: "Calendar Tab",
     fromSide: "right",
     toSide: "left",
   },
   {
-    id: "w3",
+    id: "w-cal-budget",
     from: "calendar",
     to: "budget",
     label: "Budget Tab",
@@ -344,67 +529,162 @@ const WIRES: FlowWire[] = [
     toSide: "left",
   },
   {
-    id: "w4",
+    id: "w-budget-tasks",
+    from: "budget",
+    to: "tasks",
+    label: "Tasks Tab",
+    fromSide: "right",
+    toSide: "left",
+  },
+  {
+    id: "w-tasks-settings",
+    from: "tasks",
+    to: "settings",
+    label: "Settings Tab",
+    fromSide: "right",
+    toSide: "left",
+  },
+
+  // Tab -> Modals & Forms
+  {
+    id: "w-home-notif",
+    from: "home",
+    to: "notifications",
+    label: "Bell Icon",
+    fromSide: "bottom",
+    toSide: "top",
+  },
+  {
+    id: "w-cal-addevent",
+    from: "calendar",
+    to: "add-event",
+    label: "+ New Event",
+    fromSide: "bottom",
+    toSide: "top",
+  },
+  {
+    id: "w-budget-reports",
     from: "budget",
     to: "reports",
-    label: "Reports & Insights",
+    label: "Reports Pill",
     fromSide: "bottom",
     toSide: "top",
   },
   {
-    id: "w5",
+    id: "w-budget-addtx",
     from: "budget",
-    to: "bills",
-    label: "Bills Tab",
-    fromSide: "right",
-    toSide: "left",
+    to: "add-transaction",
+    label: "+ Transaction",
+    fromSide: "bottom",
+    toSide: "top",
   },
   {
-    id: "w6",
-    from: "bills",
-    to: "tasks",
-    label: "Checklist Tab",
-    fromSide: "right",
-    toSide: "left",
+    id: "w-budget-billdetail",
+    from: "budget",
+    to: "bill-detail",
+    label: "Tap Bill Row",
+    fromSide: "bottom",
+    toSide: "top",
   },
   {
-    id: "w7",
+    id: "w-billdetail-addbill",
+    from: "bill-detail",
+    to: "add-bill",
+    label: "Edit / Add Bill",
+    fromSide: "bottom",
+    toSide: "top",
+  },
+  {
+    id: "w-tasks-addtask",
     from: "tasks",
-    to: "profile",
-    label: "Profile Tab",
-    fromSide: "right",
-    toSide: "left",
+    to: "add-task",
+    label: "+ New Task",
+    fromSide: "bottom",
+    toSide: "top",
+  },
+
+  // Settings -> Sub-screens
+  {
+    id: "w-settings-account",
+    from: "settings",
+    to: "account",
+    label: "Account",
+    fromSide: "bottom",
+    toSide: "top",
   },
   {
-    id: "w8",
-    from: "profile",
+    id: "w-settings-appearance",
+    from: "settings",
+    to: "appearance",
+    label: "Appearance",
+    fromSide: "bottom",
+    toSide: "top",
+  },
+  {
+    id: "w-settings-themes",
+    from: "settings",
     to: "themes",
-    label: "Custom Theme",
+    label: "Themes",
     fromSide: "bottom",
     toSide: "top",
   },
   {
-    id: "w9",
-    from: "profile",
+    id: "w-settings-widgets",
+    from: "settings",
     to: "widgets",
-    label: "Home Widgets",
+    label: "Widget Studio",
     fromSide: "bottom",
     toSide: "top",
   },
   {
-    id: "w10",
-    from: "profile",
+    id: "w-account-signin",
+    from: "account",
     to: "signin",
     label: "Cloud Sync",
     fromSide: "bottom",
     toSide: "top",
   },
+  {
+    id: "w-backup-signin",
+    from: "data-backup",
+    to: "signin",
+    label: "Sign In",
+    fromSide: "left",
+    toSide: "right",
+  },
+  {
+    id: "w-appearance-backup",
+    from: "settings",
+    to: "data-backup",
+    label: "Data & Backup",
+    fromSide: "bottom",
+    toSide: "top",
+  },
+  {
+    id: "w-settings-language",
+    from: "settings",
+    to: "language",
+    label: "Language",
+    fromSide: "bottom",
+    toSide: "top",
+  },
+  {
+    id: "w-settings-about",
+    from: "settings",
+    to: "about",
+    label: "About Manke",
+    fromSide: "bottom",
+    toSide: "top",
+  },
 ];
 
-const CANVAS_W = 2940;
-const CANVAS_H = 1480;
+const CANVAS_W = 3920;
+const CANVAS_H = 2280;
 
-function anchorPoint(node: ScreenNode, side: "left" | "right" | "top" | "bottom") {
+function anchorPoint(
+  node: ScreenNode,
+  side: "left" | "right" | "top" | "bottom"
+) {
   const topY = node.y + 34;
   if (side === "right") return { x: node.x + CARD_W, y: topY + CARD_H / 2 };
   if (side === "left") return { x: node.x, y: topY + CARD_H / 2 };
@@ -413,12 +693,18 @@ function anchorPoint(node: ScreenNode, side: "left" | "right" | "top" | "bottom"
 }
 
 export function FigmaPlayground() {
-  const [viewMode, setViewMode] = useState<"canvas" | "gallery">("canvas");
+  const [viewMode, setViewMode] = useState<
+    "interactive" | "canvas" | "gallery"
+  >("interactive");
   const [appearance, setAppearance] = useState<"light" | "dark">("light");
   const [showWires, setShowWires] = useState(true);
   const [selectedId, setSelectedId] = useState<ScreenId>("home");
-  const [variantIndex, setVariantIndex] = useState<Partial<Record<ScreenId, number>>>({});
-  const [zoom, setZoom] = useState(0.56);
+  const [interactiveKey, setInteractiveKey] = useState(0);
+  const [interactiveStart, setInteractiveStart] = useState<ScreenId>("home");
+  const [variantIndex, setVariantIndex] = useState<
+    Partial<Record<ScreenId, number>>
+  >({});
+  const [zoom, setZoom] = useState(0.46);
   const [pan, setPan] = useState({ x: 24, y: 20 });
   const [focusedModal, setFocusedModal] = useState<ScreenId | null>(null);
   const [copied, setCopied] = useState(false);
@@ -431,7 +717,11 @@ export function FigmaPlayground() {
   } | null>(null);
 
   const screenMap = useMemo(
-    () => Object.fromEntries(SCREENS.map((s) => [s.id, s])) as Record<ScreenId, ScreenNode>,
+    () =>
+      Object.fromEntries(SCREENS.map((s) => [s.id, s])) as Record<
+        ScreenId,
+        ScreenNode
+      >,
     []
   );
   const selectedScreen = screenMap[selectedId];
@@ -459,6 +749,12 @@ export function FigmaPlayground() {
     }
   };
 
+  const openInInteractive = (id: ScreenId) => {
+    setInteractiveStart(id);
+    setInteractiveKey((k) => k + 1);
+    setViewMode("interactive");
+  };
+
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
@@ -478,11 +774,22 @@ export function FigmaPlayground() {
             ◆ Manke Screen Playground
           </span>
           <span className="hidden rounded-full border border-[#CBE0FF] bg-[#EBF3FF] px-2.5 py-0.5 text-[11px] font-semibold text-[#1554D1] xl:inline-flex">
-            Real Expo React Native Captures
+            35 Real Expo Captures
           </span>
 
-          {/* View Mode Switcher */}
+          {/* 3-Mode View Switcher */}
           <div className="inline-flex rounded-lg bg-slate-100 p-0.5 text-xs font-semibold">
+            <button
+              type="button"
+              onClick={() => setViewMode("interactive")}
+              className={`rounded-md px-3 py-1 transition ${
+                viewMode === "interactive"
+                  ? "bg-white text-[#1554D1] shadow-sm"
+                  : "text-slate-500 hover:text-slate-800"
+              }`}
+            >
+              Interactive App
+            </button>
             <button
               type="button"
               onClick={() => setViewMode("canvas")}
@@ -559,7 +866,9 @@ export function FigmaPlayground() {
               <div className="hidden items-center rounded-lg border border-slate-200 bg-white text-xs font-semibold sm:flex">
                 <button
                   type="button"
-                  onClick={() => setZoom((z) => Math.max(0.32, +(z - 0.08).toFixed(2)))}
+                  onClick={() =>
+                    setZoom((z) => Math.max(0.28, +(z - 0.08).toFixed(2)))
+                  }
                   className="px-2 py-1 hover:bg-slate-100"
                 >
                   −
@@ -569,7 +878,9 @@ export function FigmaPlayground() {
                 </span>
                 <button
                   type="button"
-                  onClick={() => setZoom((z) => Math.min(1.15, +(z + 0.08).toFixed(2)))}
+                  onClick={() =>
+                    setZoom((z) => Math.min(1.15, +(z + 0.08).toFixed(2)))
+                  }
                   className="px-2 py-1 hover:bg-slate-100"
                 >
                   +
@@ -577,7 +888,7 @@ export function FigmaPlayground() {
                 <button
                   type="button"
                   onClick={() => {
-                    setZoom(0.56);
+                    setZoom(0.46);
                     setPan({ x: 24, y: 20 });
                   }}
                   className="border-l border-slate-200 px-2 py-1 text-[11px] hover:bg-slate-100"
@@ -600,20 +911,20 @@ export function FigmaPlayground() {
 
       {/* Workspace Body */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Left Figma Layers Sidebar */}
-        <aside className="hidden w-68 shrink-0 flex-col border-r border-slate-200 bg-white lg:flex">
-          <div className="border-b border-slate-100 px-4 py-3">
-            <p className="text-[11px] font-bold tracking-wider text-slate-400 uppercase">
-              Live App Screens ({SCREENS.length})
-            </p>
-            <p className="mt-0.5 text-[11px] text-slate-500">
-              Captured directly from Manke on Expo Web
-            </p>
-          </div>
+        {/* Left Figma Layers Sidebar (Canvas & Gallery modes) */}
+        {viewMode !== "interactive" && (
+          <aside className="hidden w-68 shrink-0 flex-col border-r border-slate-200 bg-white lg:flex">
+            <div className="border-b border-slate-100 px-4 py-3">
+              <p className="text-[11px] font-bold tracking-wider text-slate-400 uppercase">
+                Live App Screens ({SCREENS.length})
+              </p>
+              <p className="mt-0.5 text-[11px] text-slate-500">
+                35 real Expo Web captures · 5-tab layout
+              </p>
+            </div>
 
-          <div className="flex-1 space-y-4 overflow-y-auto p-3">
-            {(["Onboarding", "Core 6 Tabs", "Modals & Sub-Screens"] as const).map(
-              (group) => (
+            <div className="flex-1 space-y-4 overflow-y-auto p-3">
+              {SCREEN_GROUPS.map((group) => (
                 <div key={group}>
                   <p className="mb-1.5 px-2 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
                     {group}
@@ -654,86 +965,103 @@ export function FigmaPlayground() {
                     })}
                   </div>
                 </div>
-              )
-            )}
-          </div>
+              ))}
+            </div>
 
-          {/* Selected Screen Inspector */}
-          <div className="border-t border-slate-200 bg-slate-50 p-4">
-            <p className="text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-              Selected · {selectedScreen.code}
-            </p>
-            <p className="mt-0.5 text-sm font-extrabold text-[#0F172A]">
-              {selectedScreen.title}
-            </p>
-            <p className="mt-1 text-xs leading-relaxed text-slate-600">
-              {selectedScreen.summary}
-            </p>
+            {/* Selected Screen Inspector */}
+            <div className="border-t border-slate-200 bg-slate-50 p-4">
+              <p className="text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+                Selected · {selectedScreen.code}
+              </p>
+              <p className="mt-0.5 text-sm font-extrabold text-[#0F172A]">
+                {selectedScreen.title}
+              </p>
+              <p className="mt-1 text-xs leading-relaxed text-slate-600">
+                {selectedScreen.summary}
+              </p>
 
-            {selectedScreen.variants.length > 1 ? (
-              <div className="mt-3">
-                <p className="mb-1.5 text-[10px] font-bold text-slate-400 uppercase">
-                  Captured States
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {selectedScreen.variants.map((v, idx) => {
-                    const active = (variantIndex[selectedScreen.id] ?? 0) === idx;
-                    return (
-                      <button
-                        key={v.label}
-                        type="button"
-                        onClick={() =>
-                          setVariantIndex((prev) => ({
-                            ...prev,
-                            [selectedScreen.id]: idx,
-                          }))
-                        }
-                        className={`rounded-full px-2.5 py-1 text-[10.5px] font-bold transition ${
-                          active
-                            ? "bg-[#1D6BF3] text-white"
-                            : "border border-slate-200 bg-white text-slate-600 hover:border-blue-300"
-                        }`}
-                      >
-                        {v.label}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            ) : null}
-
-            {relatedWires.length > 0 ? (
-              <div className="mt-3 space-y-1">
-                <p className="text-[10px] font-bold text-slate-400 uppercase">
-                  Connected Flows
-                </p>
-                {relatedWires.map((w) => (
-                  <p key={w.id} className="text-[11px] text-slate-600">
-                    <span className="font-semibold text-[#0F172A]">
-                      {screenMap[w.from].title}
-                    </span>{" "}
-                    →{" "}
-                    <span className="font-semibold text-[#0F172A]">
-                      {screenMap[w.to].title}
-                    </span>{" "}
-                    <span className="text-slate-400">({w.label})</span>
+              {selectedScreen.variants.length > 1 ? (
+                <div className="mt-3">
+                  <p className="mb-1.5 text-[10px] font-bold text-slate-400 uppercase">
+                    Captured States
                   </p>
-                ))}
+                  <div className="flex flex-wrap gap-1.5">
+                    {selectedScreen.variants.map((v, idx) => {
+                      const active =
+                        (variantIndex[selectedScreen.id] ?? 0) === idx;
+                      return (
+                        <button
+                          key={v.label}
+                          type="button"
+                          onClick={() =>
+                            setVariantIndex((prev) => ({
+                              ...prev,
+                              [selectedScreen.id]: idx,
+                            }))
+                          }
+                          className={`rounded-full px-2.5 py-1 text-[10.5px] font-bold transition ${
+                            active
+                              ? "bg-[#1D6BF3] text-white"
+                              : "border border-slate-200 bg-white text-slate-600 hover:border-blue-300"
+                          }`}
+                        >
+                          {v.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : null}
+
+              {relatedWires.length > 0 ? (
+                <div className="mt-3 space-y-1">
+                  <p className="text-[10px] font-bold text-slate-400 uppercase">
+                    Connected Flows
+                  </p>
+                  {relatedWires.slice(0, 4).map((w) => (
+                    <p key={w.id} className="text-[11px] text-slate-600">
+                      <span className="font-semibold text-[#0F172A]">
+                        {screenMap[w.from].title}
+                      </span>{" "}
+                      →{" "}
+                      <span className="font-semibold text-[#0F172A]">
+                        {screenMap[w.to].title}
+                      </span>{" "}
+                      <span className="text-slate-400">({w.label})</span>
+                    </p>
+                  ))}
+                </div>
+              ) : null}
+
+              <div className="mt-3 grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => openInInteractive(selectedId)}
+                  className="rounded-xl bg-[#1D6BF3] py-2 text-xs font-bold text-white shadow-xs transition hover:bg-[#1554D1]"
+                >
+                  Try Live
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFocusedModal(selectedId)}
+                  className="rounded-xl border border-slate-200 bg-white py-2 text-xs font-bold text-[#0F172A] shadow-xs transition hover:border-blue-300 hover:text-blue-700"
+                >
+                  Focus Crop
+                </button>
               </div>
-            ) : null}
+            </div>
+          </aside>
+        )}
 
-            <button
-              type="button"
-              onClick={() => setFocusedModal(selectedId)}
-              className="mt-3 w-full rounded-xl border border-slate-200 bg-white py-2 text-xs font-bold text-[#0F172A] shadow-xs transition hover:border-blue-300 hover:text-blue-700"
-            >
-              Open Full-Size Crop View
-            </button>
-          </div>
-        </aside>
-
-        {/* Main Canvas or Gallery Area */}
-        {viewMode === "canvas" ? (
+        {/* Main Content: Interactive App | Canvas & Wiring | All Screens Gallery */}
+        {viewMode === "interactive" ? (
+          <InteractivePhonePrototype
+            key={interactiveKey}
+            appearance={appearance}
+            onAppearanceChange={setAppearance}
+            initialScreen={interactiveStart}
+          />
+        ) : viewMode === "canvas" ? (
           <div
             className="relative flex-1 cursor-grab overflow-hidden active:cursor-grabbing"
             style={{
@@ -768,7 +1096,8 @@ export function FigmaPlayground() {
           >
             {/* Helper hint pill */}
             <div className="pointer-events-none absolute bottom-4 left-4 z-20 rounded-full border border-slate-200 bg-white/90 px-3.5 py-1.5 text-[11px] font-medium text-slate-600 shadow-sm backdrop-blur">
-              Drag canvas to pan · Toggle <b>Light / Dark Captures</b> above · Click any artboard to inspect real Expo Web states
+              Drag canvas to pan · Toggle <b>Light / Dark Captures</b> above ·
+              Click any artboard to inspect real Expo Web states
             </div>
 
             <div
@@ -779,6 +1108,17 @@ export function FigmaPlayground() {
                 transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
               }}
             >
+              {/* Subtle Section Labels on Canvas */}
+              <div className="pointer-events-none absolute top-2 left-10 text-xs font-extrabold tracking-widest text-slate-400 uppercase">
+                Row 1 · Onboarding &amp; Core 5 Tabs
+              </div>
+              <div className="pointer-events-none absolute top-[760px] left-[390px] text-xs font-extrabold tracking-widest text-slate-400 uppercase">
+                Row 2 · Forms, Modals &amp; Primary Settings
+              </div>
+              <div className="pointer-events-none absolute top-[1500px] left-[1790px] text-xs font-extrabold tracking-widest text-slate-400 uppercase">
+                Row 3 · Secondary Sheets &amp; Settings Sub-Screens
+              </div>
+
               {/* SVG Prototype Wiring Layer */}
               {showWires && (
                 <svg
@@ -818,7 +1158,10 @@ export function FigmaPlayground() {
                       wire.from === selectedId || wire.to === selectedId;
 
                     let d = "";
-                    if (wire.fromSide === "right" && wire.toSide === "left") {
+                    if (
+                      (wire.fromSide === "right" && wire.toSide === "left") ||
+                      (wire.fromSide === "left" && wire.toSide === "right")
+                    ) {
                       const midX = (p1.x + p2.x) / 2;
                       d = `M ${p1.x} ${p1.y} C ${midX} ${p1.y}, ${midX} ${p2.y}, ${p2.x} ${p2.y}`;
                     } else {
@@ -837,7 +1180,7 @@ export function FigmaPlayground() {
                           stroke={isHighlighted ? "#1D6BF3" : "#94A3B8"}
                           strokeWidth={isHighlighted ? 3 : 2}
                           strokeDasharray={isHighlighted ? undefined : "6 6"}
-                          opacity={isHighlighted ? 0.95 : 0.45}
+                          opacity={isHighlighted ? 0.95 : 0.4}
                           markerEnd={
                             isHighlighted
                               ? "url(#arrow-active)"
@@ -845,9 +1188,9 @@ export function FigmaPlayground() {
                           }
                         />
                         <rect
-                          x={labelX - 62}
+                          x={labelX - 58}
                           y={labelY - 12}
-                          width={124}
+                          width={116}
                           height={24}
                           rx={12}
                           fill={isHighlighted ? "#1D6BF3" : "#FFFFFF"}
@@ -921,11 +1264,15 @@ export function FigmaPlayground() {
 
                     {/* Real State Variant Pills */}
                     {node.variants.length > 1 ? (
-                      <div className="mt-2.5 flex justify-center gap-1.5">
+                      <div className="mt-2.5 flex flex-wrap justify-center gap-1.5">
                         {node.variants.map((v, idx) => {
                           const active =
                             (variantIndex[node.id] ?? 0) === idx &&
-                            !(appearance === "dark" && node.darkCapture && idx === 0);
+                            !(
+                              appearance === "dark" &&
+                              node.darkCapture &&
+                              idx === 0
+                            );
                           return (
                             <button
                               key={v.label}
@@ -956,20 +1303,22 @@ export function FigmaPlayground() {
             </div>
           </div>
         ) : (
-          /* Clean Gallery Grid View */
+          /* Clean Gallery Grid View grouped neatly */
           <div className="flex-1 overflow-y-auto p-6 sm:p-10">
             <div className="mx-auto max-w-6xl">
               <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
                 <div>
                   <p className="text-xs font-bold tracking-widest text-[#1D6BF3] uppercase">
-                    Real Expo React Native Captures · {SCREENS.length} Screens
+                    Real Expo React Native Captures · {SCREENS.length} Screens ·
+                    35 States
                   </p>
                   <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-[#0F172A] sm:text-3xl">
-                    Manke Screen Gallery
+                    Manke Complete Screen Gallery
                   </h1>
                   <p className="mt-1 text-sm text-slate-600">
-                    Every screen below is captured directly from the live Manke app.
-                    Switch Light / Dark captures or click any screen to inspect full-size.
+                    Every screen below is captured directly from the live Manke
+                    app. Switch Light / Dark captures, inspect state variants,
+                    or jump straight into Interactive App mode.
                   </p>
                 </div>
                 <Link
@@ -980,68 +1329,102 @@ export function FigmaPlayground() {
                 </Link>
               </div>
 
-              <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
-                {SCREENS.map((node) => {
-                  const capture = resolveCapture(node);
+              <div className="space-y-12">
+                {SCREEN_GROUPS.map((group) => {
+                  const items = SCREENS.filter((s) => s.group === group);
                   return (
-                    <div
-                      key={node.id}
-                      className="flex flex-col items-center rounded-[28px] border border-slate-200/80 bg-white p-6 shadow-sm transition hover:shadow-md"
-                    >
-                      <div className="mb-4 flex w-full items-center justify-between">
-                        <div>
-                          <span className="font-mono text-[11px] font-bold text-slate-400">
-                            {node.code} · {node.group}
-                          </span>
-                          <h2 className="text-base font-extrabold text-[#0F172A]">
-                            {node.title}
-                          </h2>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => setFocusedModal(node.id)}
-                          className="rounded-full bg-gradient-to-r from-[#2B8CF8] to-[#1D6BF3] px-3 py-1 text-xs font-bold text-white"
-                        >
-                          Focus
-                        </button>
+                    <section key={group}>
+                      <div className="mb-4 flex items-center justify-between border-b border-slate-200 pb-2">
+                        <h2 className="text-sm font-extrabold tracking-wider text-slate-700 uppercase">
+                          {group}
+                        </h2>
+                        <span className="text-xs font-semibold text-slate-400">
+                          {items.length}{" "}
+                          {items.length === 1 ? "screen" : "screens"}
+                        </span>
                       </div>
 
-                      <RealPhoneFrame
-                        capture={capture}
-                        alt={`Manke ${node.title} (${capture.label})`}
-                      />
+                      <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
+                        {items.map((node) => {
+                          const capture = resolveCapture(node);
+                          return (
+                            <div
+                              key={node.id}
+                              className="flex flex-col items-center rounded-[28px] border border-slate-200/80 bg-white p-6 shadow-sm transition hover:shadow-md"
+                            >
+                              <div className="mb-4 flex w-full items-center justify-between gap-2">
+                                <div className="min-w-0">
+                                  <span className="font-mono text-[11px] font-bold text-slate-400">
+                                    {node.code} · {node.group}
+                                  </span>
+                                  <h3 className="truncate text-base font-extrabold text-[#0F172A]">
+                                    {node.title}
+                                  </h3>
+                                </div>
+                                <div className="flex shrink-0 items-center gap-1.5">
+                                  <button
+                                    type="button"
+                                    onClick={() => openInInteractive(node.id)}
+                                    className="rounded-full border border-[#CBE0FF] bg-[#EBF3FF] px-2.5 py-1 text-[11px] font-bold text-[#1554D1] hover:bg-[#DCEBFF]"
+                                  >
+                                    Try
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => setFocusedModal(node.id)}
+                                    className="rounded-full bg-gradient-to-r from-[#2B8CF8] to-[#1D6BF3] px-3 py-1 text-[11px] font-bold text-white"
+                                  >
+                                    Focus
+                                  </button>
+                                </div>
+                              </div>
 
-                      {node.variants.length > 1 ? (
-                        <div className="mt-3 flex flex-wrap justify-center gap-1.5">
-                          {node.variants.map((v, idx) => {
-                            const active = (variantIndex[node.id] ?? 0) === idx;
-                            return (
-                              <button
-                                key={v.label}
-                                type="button"
-                                onClick={() =>
-                                  setVariantIndex((prev) => ({
-                                    ...prev,
-                                    [node.id]: idx,
-                                  }))
-                                }
-                                className={`rounded-full px-2.5 py-0.5 text-[10.5px] font-bold transition ${
-                                  active
-                                    ? "bg-[#1D6BF3] text-white"
-                                    : "border border-slate-200 bg-slate-50 text-slate-600 hover:border-blue-300"
-                                }`}
-                              >
-                                {v.label}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      ) : null}
+                              <RealPhoneFrame
+                                capture={capture}
+                                alt={`Manke ${node.title} (${capture.label})`}
+                              />
 
-                      <p className="mt-4 text-center text-xs leading-relaxed text-slate-500">
-                        {node.summary}
-                      </p>
-                    </div>
+                              {node.variants.length > 1 ? (
+                                <div className="mt-3 flex flex-wrap justify-center gap-1.5">
+                                  {node.variants.map((v, idx) => {
+                                    const active =
+                                      (variantIndex[node.id] ?? 0) === idx &&
+                                      !(
+                                        appearance === "dark" &&
+                                        node.darkCapture &&
+                                        idx === 0
+                                      );
+                                    return (
+                                      <button
+                                        key={v.label}
+                                        type="button"
+                                        onClick={() =>
+                                          setVariantIndex((prev) => ({
+                                            ...prev,
+                                            [node.id]: idx,
+                                          }))
+                                        }
+                                        className={`rounded-full px-2.5 py-0.5 text-[10.5px] font-bold transition ${
+                                          active
+                                            ? "bg-[#1D6BF3] text-white"
+                                            : "border border-slate-200 bg-slate-50 text-slate-600 hover:border-blue-300"
+                                        }`}
+                                      >
+                                        {v.label}
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              ) : null}
+
+                              <p className="mt-4 text-center text-xs leading-relaxed text-slate-500">
+                                {node.summary}
+                              </p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </section>
                   );
                 })}
               </div>
@@ -1063,7 +1446,8 @@ export function FigmaPlayground() {
             <div className="mb-3 flex w-full items-center justify-between">
               <div>
                 <p className="font-mono text-[11px] font-bold text-slate-400">
-                  {screenMap[focusedModal].code} · {screenMap[focusedModal].group}
+                  {screenMap[focusedModal].code} ·{" "}
+                  {screenMap[focusedModal].group}
                 </p>
                 <h3 className="text-lg font-extrabold text-[#0F172A]">
                   {screenMap[focusedModal].title}
@@ -1118,13 +1502,26 @@ export function FigmaPlayground() {
               {screenMap[focusedModal].summary}
             </p>
 
-            <a
-              href={resolveCapture(screenMap[focusedModal]).src}
-              download={`manke-${focusedModal}.webp`}
-              className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#0F172A] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#1D6BF3]"
-            >
-              Download Raw Screen Capture
-            </a>
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  const target = focusedModal;
+                  setFocusedModal(null);
+                  openInInteractive(target);
+                }}
+                className="inline-flex items-center gap-2 rounded-full bg-[#1D6BF3] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#1554D1]"
+              >
+                Open in Interactive App
+              </button>
+              <a
+                href={resolveCapture(screenMap[focusedModal]).src}
+                download={`manke-${focusedModal}.webp`}
+                className="inline-flex items-center gap-2 rounded-full bg-[#0F172A] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#1D6BF3]"
+              >
+                Download Raw Capture
+              </a>
+            </div>
           </div>
         </div>
       ) : null}
