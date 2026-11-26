@@ -60,15 +60,15 @@ const SCREEN_META: Record<PrototypeScreenId, ScreenMeta> = {
     id: "calendar",
     badge: "Tab 2 · Calendar",
     title: "Calendar & Schedule",
-    note: "Toggle between Week and Month views at the top, or tap the blue + button to open the New Event sheet.",
+    note: "Toggle between Month and Week views at the top, or tap the blue + button to open the New Event sheet.",
     isModal: false,
     defaultBack: "home",
   },
   budget: {
     id: "budget",
     badge: "Tab 3 · Budget",
-    title: "Budget, Bills & Categories",
-    note: "Switch Bills / Transactions / Categories. Tap any bill row for Bill Detail, tap Reports & Insights, or tap + on Transactions/Categories.",
+    title: "Budget, Bills & Transactions",
+    note: "Home-style gradient hero card with Bills and Transactions tabs (By Category lives inside Transactions). Tap any bill row for Bill Detail or tap Reports & Insights.",
     isModal: false,
     defaultBack: "home",
   },
@@ -84,7 +84,7 @@ const SCREEN_META: Record<PrototypeScreenId, ScreenMeta> = {
     id: "settings",
     badge: "Tab 5 · Settings",
     title: "Settings Menu",
-    note: "Clean 7-row menu. Tap any row — Account, Appearance, Themes, Widget, Data & Backup, Language, or About Manke.",
+    note: "Clean 7-row menu with custom Manke artwork. Tap Account, Appearance & Themes, Preferences, Widget, Data & Backup, Language, or About Manke.",
     isModal: false,
     defaultBack: "home",
   },
@@ -155,16 +155,16 @@ const SCREEN_META: Record<PrototypeScreenId, ScreenMeta> = {
   appearance: {
     id: "appearance",
     badge: "Settings Sub-Screen",
-    title: "Appearance & Preferences",
-    note: "Display mode (System / Light / Dark), currency, monthly budget limit, and notification switches. Tap < to go back.",
+    title: "Preferences",
+    note: "Currency (32+ currencies), monthly budget limit, and local notification & reminder switches. Tap < to go back.",
     isModal: true,
     defaultBack: "settings",
   },
   themes: {
     id: "themes",
     badge: "Settings Sheet",
-    title: "Custom Theme Sheet",
-    note: "Tap Light, Dark, or Emerald Teal inside the sheet to preview themes live and sync Light/Dark mode across the whole app.",
+    title: "Appearance & Themes",
+    note: "System / Light / Dark mode plus 5 accent color palettes all in one sheet. Tap Light, Dark, or Emerald Teal to preview live.",
     isModal: true,
     defaultBack: "settings",
   },
@@ -231,8 +231,8 @@ const QUICK_JUMP_MODALS: { id: PrototypeScreenId; label: string }[] = [
 
 const QUICK_JUMP_SETTINGS: { id: PrototypeScreenId; label: string }[] = [
   { id: "account", label: "Account" },
-  { id: "appearance", label: "Appearance" },
-  { id: "themes", label: "Themes" },
+  { id: "themes", label: "Appearance & Themes" },
+  { id: "appearance", label: "Preferences" },
   { id: "widgets", label: "Widget Studio" },
   { id: "data-backup", label: "Data & Backup" },
   { id: "language", label: "Language" },
@@ -251,7 +251,7 @@ export function InteractivePhonePrototype({
 }) {
   const [screen, setScreen] = useState<PrototypeScreenId>(initialScreen);
   const [history, setHistory] = useState<PrototypeScreenId[]>([]);
-  const [showHotspots, setShowHotspots] = useState(true);
+  const [showHotspots, setShowHotspots] = useState(false);
 
   // Interactive per-screen real capture states
   const [calendarView, setCalendarView] = useState<"week" | "month">("week");
@@ -686,20 +686,8 @@ export function InteractivePhonePrototype({
       case "calendar":
         return [
           {
-            id: "cal-week",
-            left: 5,
-            top: 7.5,
-            width: 45,
-            height: 6,
-            label: "Week View",
-            onClick: () => {
-              setCalendarView("week");
-              setLastFeedback("Switched Calendar to Week view");
-            },
-          },
-          {
             id: "cal-month",
-            left: 50,
+            left: 5,
             top: 7.5,
             width: 45,
             height: 6,
@@ -707,6 +695,18 @@ export function InteractivePhonePrototype({
             onClick: () => {
               setCalendarView("month");
               setLastFeedback("Switched Calendar to Month view");
+            },
+          },
+          {
+            id: "cal-week",
+            left: 50,
+            top: 7.5,
+            width: 45,
+            height: 6,
+            label: "Week View",
+            onClick: () => {
+              setCalendarView("week");
+              setLastFeedback("Switched Calendar to Week view");
             },
           },
           {
@@ -738,9 +738,9 @@ export function InteractivePhonePrototype({
             id: "budget-seg-bills",
             left: 5,
             top: 43,
-            width: 30,
+            width: 45,
             height: 6,
-            label: "Bills Segment",
+            label: "Bills",
             onClick: () => {
               setBudgetTab("bills");
               setLastFeedback("Switched Budget to Bills");
@@ -748,26 +748,14 @@ export function InteractivePhonePrototype({
           },
           {
             id: "budget-seg-tx",
-            left: 35,
+            left: 50,
             top: 43,
-            width: 34,
+            width: 45,
             height: 6,
-            label: "Transactions Segment",
+            label: "Transactions",
             onClick: () => {
               setBudgetTab("transactions");
               setLastFeedback("Switched Budget to Transactions");
-            },
-          },
-          {
-            id: "budget-seg-cat",
-            left: 69,
-            top: 43,
-            width: 26,
-            height: 6,
-            label: "Categories Segment",
-            onClick: () => {
-              setBudgetTab("categories");
-              setLastFeedback("Switched Budget to Categories");
             },
           },
         ];
@@ -776,23 +764,49 @@ export function InteractivePhonePrototype({
           budgetSpots.push({
             id: "budget-bill-rows",
             left: 4,
-            top: 55,
+            top: 56,
             width: 92,
-            height: 34,
+            height: 33,
             label: "Open Bill Detail",
             onClick: () => openModal("bill-detail", "Opened Bill Detail modal"),
           });
         } else {
-          budgetSpots.push({
-            id: "budget-add-fab",
-            left: 79,
-            top: 80,
-            width: 16,
-            height: 9,
-            label: "+ Add Transaction",
-            onClick: () =>
-              openModal("add-transaction", "Opened Add Transaction sheet"),
-          });
+          budgetSpots.push(
+            {
+              id: "budget-tx-all",
+              left: 5,
+              top: 50.5,
+              width: 55,
+              height: 4.5,
+              label: "All / Income / Expenses",
+              onClick: () => {
+                setBudgetTab("transactions");
+                setLastFeedback("Showing Transactions list");
+              },
+            },
+            {
+              id: "budget-tx-cat",
+              left: 62,
+              top: 50.5,
+              width: 33,
+              height: 4.5,
+              label: "By Category",
+              onClick: () => {
+                setBudgetTab("categories");
+                setLastFeedback("Showing Spending by Category");
+              },
+            },
+            {
+              id: "budget-add-fab",
+              left: 79,
+              top: 80,
+              width: 16,
+              height: 9,
+              label: "+ Add Transaction",
+              onClick: () =>
+                openModal("add-transaction", "Opened Add Transaction sheet"),
+            }
+          );
         }
 
         return [...budgetSpots, ...bottomNavTabs];
@@ -886,8 +900,8 @@ export function InteractivePhonePrototype({
       case "settings": {
         const rows: { id: PrototypeScreenId; label: string }[] = [
           { id: "account", label: "Account" },
-          { id: "appearance", label: "Appearance" },
-          { id: "themes", label: "Themes" },
+          { id: "themes", label: "Appearance & Themes" },
+          { id: "appearance", label: "Preferences" },
           { id: "widgets", label: "Widget Studio" },
           { id: "data-backup", label: "Data & Backup" },
           { id: "language", label: "Language" },

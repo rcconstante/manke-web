@@ -364,16 +364,16 @@ const SCREENS: ScreenNode[] = [
   {
     id: "appearance",
     code: "15",
-    title: "Appearance",
+    title: "Preferences",
     group: "Settings Sub-Screens",
     summary:
-      "Settings → Appearance. System/Light/Dark mode, Currency selector, Monthly Budget cap, and Notification reminder switches.",
+      "Settings → Preferences. Currency selector (32+ currencies), Monthly Budget cap, and Notification reminder switches.",
     x: 2840,
     y: 800,
     variants: [
       {
         src: "/playground/09-appearance.webp",
-        label: "Appearance",
+        label: "Preferences",
         topBg: "#FFFFFF",
       },
     ],
@@ -381,10 +381,10 @@ const SCREENS: ScreenNode[] = [
   {
     id: "themes",
     code: "16",
-    title: "Themes",
+    title: "Appearance & Themes",
     group: "Settings Sub-Screens",
     summary:
-      "Settings → Themes sheet. Live appearance switcher and 5 curated accent palettes including Manke Blue and Emerald Teal.",
+      "Settings → Appearance & Themes sheet. System/Light/Dark mode and 5 curated accent palettes in one unified sheet.",
     x: 3190,
     y: 800,
     variants: [
